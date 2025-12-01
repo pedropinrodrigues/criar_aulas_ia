@@ -79,18 +79,18 @@ def search_agent(graph_state: Dict[str, Any]) -> Dict[str, Any]:
     
     return graph_state
         
-# if __name__ == "__main__":
-#     dotenv.load_dotenv()
-#     os.environ["OPENAI_API_KEY"] = dotenv.get_key(dotenv.find_dotenv(), "OPENAI_API_KEY")
+if __name__ == "__main__":
+    dotenv.load_dotenv()
+    os.environ["OPENAI_API_KEY"] = dotenv.get_key(dotenv.find_dotenv(), "OPENAI_API_KEY")
 
-#     graph_state = {
-#         "materials": {
-#             "title": "Introduction to Python Programming",
-#             "public_type": "beginners",
-#             "topics": ["Variables and Data Types", "Control Structures", "Functions"],
-#             "result": [],
-#         }
-#     }
+    graph_state = {
+        "materials": {
+            "title": "Introduction to Python Programming",
+            "public_type": "beginners",
+            "topics": ["Variables and Data Types", "Control Structures", "Functions"],
+            "result": [],
+        }
+    }
 
-#     updated_state = search_agent(graph_state)
-#     print(json.dumps(updated_state, indent=2, ensure_ascii=False))
+    updated_state = search_agent(graph_state)
+    print(json.dumps(updated_state, indent=2, ensure_ascii=False))

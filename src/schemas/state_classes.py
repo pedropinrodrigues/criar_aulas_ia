@@ -19,6 +19,7 @@ class TheoryClass(TypedDict):
     content: str
     duration_minutes: int
     references: list[str]
+    result: str
 
 class GraphState(TypedDict):
     materials: Materials
