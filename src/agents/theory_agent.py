@@ -2,7 +2,8 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.agents import create_tool_calling_agent, AgentExecutor
 from langchain.tools import tool
-from typing import Dict, Any
+from typing import Any
+from schemas.state_classes import GraphState
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -30,7 +31,7 @@ def inspect_text_references(references: list[str]) -> dict[str, Any]:
         
     return references_content
 
-def theory_agent(graph_state: Dict[str, Any]) -> Dict[str, Any]:
+def theory_agent(graph_state: GraphState) -> GraphState:
     
     theory_class = graph_state["theory_class"]
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.5)
@@ -81,7 +82,7 @@ if __name__ == "__main__":
     os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
     
     # Teste rápido do agente de teoria
-    graph_state: Dict[str, Any] = {
+    graph_state: GraphState = {
         "theory_class": {
             "title": "Introdução à Programação em Python",
             "content": "Python é uma linguagem de programação versátil e amplamente utilizada. Nesta aula, abordaremos os conceitos básicos, incluindo sintaxe, tipos de dados, estruturas de controle e funções.",

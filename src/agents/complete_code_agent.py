@@ -3,8 +3,6 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from typing import Dict, Any
 
-
-
 def complete_code_agent(graph_state: Dict[str, Any]) -> Dict[str, Any]:
     
     pratical_class = graph_state["pratical_class"]

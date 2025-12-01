@@ -4,8 +4,7 @@ import dotenv
 
 from langchain.tools import tool
 from langchain_tavily import TavilySearch
-from schemas.state_classes import MaterialsDto
-from typing import Dict, Any
+from schemas.state_classes import MaterialsDto, GraphState
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_tool_calling_agent, AgentExecutor
 from langchain_core.prompts import ChatPromptTemplate
@@ -18,7 +17,7 @@ def tavily_search_tool(query: str) -> str:
     results = tavily.run(query)
     return json.dumps(results)
 
-def search_agent(graph_state: Dict[str, Any]) -> Dict[str, Any]:
+def search_agent(graph_state: GraphState) -> GraphState:
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
     tools = [tavily_search_tool]
     
