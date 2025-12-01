@@ -22,7 +22,7 @@ def inspect_text_references(references: list[str]) -> dict[str, Any]:
         if response.status_code == 200:
             print("Successfully fetched the webpage!")
         else:
-            print(f"Failed to fetch the webpage. Status code: {response.status_code}")
+            raise Exception(f"Failed to fetch the webpage. Status code: {response.status_code}")
             
         soup = BeautifulSoup(response.content, 'html.parser')
         text_content = soup.get_text()
@@ -43,6 +43,7 @@ def theory_agent(graph_state: Dict[str, Any]) -> Dict[str, Any]:
         {content}
         The expected duration of the class is {duration_minutes} minutes.
         If there are references provided in {references}, you should use the tool inspect_text_references.
+        The student level for this class is {student_level}.
         
         Your task is to:
             Develop a comprehensive theoretical class structure that includes:
@@ -63,12 +64,15 @@ def theory_agent(graph_state: Dict[str, Any]) -> Dict[str, Any]:
         "title": theory_class['title'],
         "content": theory_class['content'],
         "duration_minutes": theory_class['duration_minutes'],
-        "references": theory_class.get('references', [])
+        "references": theory_class.get('references', []),
+        "student_level": theory_class.get('student_level', '')
     })
     
     json_text = result['output'].strip()
     theory_class['result'] = json_text
     graph_state["theory_class"] = theory_class
+    graph_state["pratical_class"]["theory_documentation"] = theory_class['result']
+    graph_state["pratical_class"]["student_level"] = graph_state["theory_class"]["student_level"]
     
     return graph_state
 

@@ -10,17 +10,29 @@ class MaterialsDto(TypedDict):
 class Materials(TypedDict):
     title: str
     topics: list[str]
-    public_type: str
+    student_level: str
     result: list[MaterialsDto]
 
 # Para agente de Docuemntação e Estruturação da parte Teórica da Aula
 class TheoryClass(TypedDict):
     title: str
     content: str
+    c: str
     duration_minutes: int
     references: list[str]
     result: str
 
+# Para agente de Documentação e Estruturação da parte Prática da Aula
+class PraticalClass(TypedDict):
+    theory_documentation = str
+    language = str
+    student_level = str
+    
+    compelete_code = str
+    incomplete_code = str
+    pratical_documentation = str
+    
 class GraphState(TypedDict):
     materials: Materials
     theory_class: TheoryClass
+    pratical_class: PraticalClass

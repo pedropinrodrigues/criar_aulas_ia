@@ -76,6 +76,8 @@ def search_agent(graph_state: Dict[str, Any]) -> Dict[str, Any]:
                 topic=topic
             )
             materials["result"].append(material_dto)
+            
+        graph_state["theory_class"]["student_level"] = materials["public_type"]
     
     return graph_state
         
