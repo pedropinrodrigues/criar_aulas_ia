@@ -18,10 +18,13 @@ def tavily_search_tool(query: str) -> str:
     return json.dumps(results)
 
 def search_agent(graph_state: GraphState) -> GraphState:
+    materials = graph_state["materials"]
+    
+    if len(materials.get('topics', [])) == 0:
+        return graph_state
+    
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
     tools = [tavily_search_tool]
-    
-    materials = graph_state["materials"]
     
     prompt = ChatPromptTemplate.from_messages([
         ("system", """You are an expert at finding educational materials for "{title}" aimed at {public_type}.

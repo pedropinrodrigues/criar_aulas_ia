@@ -34,6 +34,10 @@ def inspect_text_references(references: list[str]) -> dict[str, Any]:
 def theory_agent(graph_state: GraphState) -> GraphState:
     
     theory_class = graph_state["theory_class"]
+    
+    if theory_class.get('content') is None:
+        return graph_state
+    
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.5)
     
     theory_class_prompt = ChatPromptTemplate.from_messages([

@@ -9,6 +9,10 @@ def pratical_doc_agent(graph_state: GraphState) -> GraphState:
     """
     
     pratical_class = graph_state["pratical_class"]
+    
+    if pratical_class.get('complete_code') is None or pratical_class.get('incomplete_code') is None:
+        return graph_state
+    
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
     
     prompt = ChatPromptTemplate.from_messages([

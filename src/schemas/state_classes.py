@@ -17,7 +17,7 @@ class Materials(TypedDict):
 class TheoryClass(TypedDict):
     title: str
     content: str
-    c: str
+    student_level: str
     duration_minutes: int
     references: list[str]
     result: str

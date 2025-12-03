@@ -6,6 +6,10 @@ from typing import Dict, Any
 def complete_code_agent(graph_state: Dict[str, Any]) -> Dict[str, Any]:
     
     pratical_class = graph_state["pratical_class"]
+    
+    if pratical_class.get('theory_documentation') is None:
+        return graph_state
+    
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.5)
     
     pratical_class_prompt = ChatPromptTemplate.from_messages([

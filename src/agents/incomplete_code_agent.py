@@ -5,6 +5,10 @@ from langchain_core.prompts import ChatPromptTemplate
 def incomplete_code_agent(graph_state: Dict[str, Any]) -> Dict[str, Any]:
     
     pratical_class = graph_state["pratical_class"]
+    
+    if pratical_class.get('compelete_code') is None:
+        return graph_state
+    
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.5)
     
     prompt = ChatPromptTemplate.from_messages([
