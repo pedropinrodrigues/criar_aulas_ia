@@ -13,10 +13,18 @@ Este projeto utiliza múltiplos agentes de IA orquestrados para gerar automatica
 
 ## 🏗️ Arquitetura
 
-O sistema é baseado em **LangGraph** com 5 agentes especializados:
+O sistema é baseado em **LangGraph** com 5 agentes especializados orquestrados por um Router:
+
+![Arquitetura do Sistema](desenho_estrutura.png)
+
+**Fluxo de Execução:**
 
 ```
-START → search_agent → theory_agent → complete_code_agent → incomplete_code_agent → pratical_doc_agent → END
+USER → Agent Orquestrador → Router → [Search Agent | Theory Agent | Practical Agent]
+                                    ↓
+                            Lista de conteúdos e materiais
+                            Documentação teórica da aula
+                            Código de exemplo (incompleto → completo) → Documentação prática da aula
 ```
 
 ### Agentes
