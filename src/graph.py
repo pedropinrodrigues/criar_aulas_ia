@@ -9,9 +9,24 @@ from agents.search_agent import search_agent
 
 import os
 import dotenv
+from pathlib import Path
 
 
-#TODO: Crie uma funcao qeu recebe uma string de input e transforma em um MD formatada coloque como parametro o noem do arquivo e a string, a funcao deve criar o arquivo dentro da pasta logs de execucao
+def save_markdown_log(file_name: str, content: str) -> str:
+    """Persist the provided content as a Markdown file under logs_execucao."""
+    logs_dir = Path(__file__).resolve().parent.parent / "logs_execucao"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+
+    safe_name = file_name.strip() or "log"
+    if not safe_name.lower().endswith(".md"):
+        safe_name += ".md"
+
+    title = Path(safe_name).stem.replace("_", " ").strip().title() or "Log"
+    markdown_content = f"# {title}\n\n{content.strip()}\n"
+
+    file_path = logs_dir / safe_name
+    file_path.write_text(markdown_content, encoding="utf-8")
+    return str(file_path)
 
 
 def create_graph() -> StateGraph:
@@ -73,19 +88,25 @@ if __name__ == "__main__":
     )
     
     final_state = main(initial_graph_state)
-    print(final_state)
     
     materials_result = final_state["materials"]["result"]
+    
+    materials_result_str = "\n\n".join(
+        f"- [{mat['type'].title()}]({mat['link']}): {mat['why']} (Topic: {mat['topic']})"
+        for mat in materials_result
+    )
+    
+    materials_result = materials_result_str
+    
     theory_result = final_state["theory_class"]["result"]
     pratical_documentation = final_state["pratical_class"]["pratical_documentation"]
+    complete_code = final_state["pratical_class"]["compelete_code"]
+    incomplete_code = final_state["pratical_class"]["incomplete_code"]
+
+    save_markdown_log("materials_result.md", str(materials_result))
+    save_markdown_log("theory_class_result.md", theory_result)
+    save_markdown_log("pratical_documentation.md", pratical_documentation)
+    save_markdown_log("complete_code.md", complete_code)
+    save_markdown_log("incomplete_code.md", incomplete_code)
     
-    print()
-    print("\n=== Materials Found ===")
-    print(formatting_materials_result(materials_result))
-    print()
-    print("\n=== Theory Class Result ===")
-    print(theory_result)
-    print()
-    print("\n=== Practical Documentation ===")
-    print(pratical_documentation)
-    print()
+    print("Execution completed. Logs saved in logs_execucao/")
