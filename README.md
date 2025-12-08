@@ -72,7 +72,7 @@ source .venv/bin/activate  # No Windows: .venv\Scripts\activate
 
 3. Instale as dependências:
 ```bash
-pip install langchain langchain-openai langchain-core langgraph langchain-tavily tavily-python python-dotenv beautifulsoup4 requests
+pip install -r requirements.txt
 ```
 
 4. Configure as variáveis de ambiente:
